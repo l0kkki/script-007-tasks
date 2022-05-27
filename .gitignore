@@ -6,9 +6,6 @@ __pycache__/
 .venv*/
 venv*/
 
-# Jupyter
-.ipynb_checkpoints/
-
 # Pycharm IDE
 /.idea/
 
