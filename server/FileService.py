@@ -20,6 +20,7 @@ def get_files() -> list:
     Returns:
         List of dicts, which contains info about each file. Keys:
         - name (str): filename
+        - create_date (datetime): date of file creation.
         - edit_date (datetime): date of last file modification.
         - size (int): size of file in bytes.
     """
@@ -36,7 +37,8 @@ def get_file_data(filename: str) -> dict:
     Returns:
         Dict, which contains full info about file. Keys:
         - name (str): filename
-        - content (bytes): file content
+        - content (str): file content
+        - create_date (datetime): date of file creation
         - edit_date (datetime): date of last file modification
         - size (int): size of file in bytes
 
@@ -48,7 +50,7 @@ def get_file_data(filename: str) -> dict:
     pass
 
 
-def create_file(filename: str, content: bytes = None) -> dict:
+def create_file(filename: str, content: str = None) -> dict:
     """Create a new file.
 
     Args:
@@ -58,8 +60,8 @@ def create_file(filename: str, content: bytes = None) -> dict:
     Returns:
         Dict, which contains name of created file. Keys:
         - name (str): filename
-        - content (bytes): file content
-        - edit_date (datetime): date of file creation
+        - content (str): file content
+        - create_date (datetime): date of file creation
         - size (int): size of file in bytes
 
     Raises:
