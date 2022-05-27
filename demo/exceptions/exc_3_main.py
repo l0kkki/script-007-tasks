@@ -7,8 +7,7 @@ if __name__ == '__main__':
         pass
 
     except KeyboardInterrupt:
-        print(f'\nERROR: Interrupted by user', file=sys.stderr)
-        sys.exit(1)
+        sys.exit('\nERROR: Interrupted by user')
     except BaseException as err:
-        print(f'ERROR: Something goes wrong:\n{err}', file=sys.stderr)
+        print("всё плохо {}".format(err))
         sys.exit(1)
