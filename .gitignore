@@ -1,23 +1,4 @@
-# python
-*.pyc
-__pycache__/
+/.idea
+/doc
+/venv
 
-# project
-FileServer/
-
-# logs
-*.log*
-
-# virtual environment
-.venv*/
-venv*/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Pycharm IDE
-/.idea/
-
-# VS Code IDE
-/.vscode/
-*.code-workspace
