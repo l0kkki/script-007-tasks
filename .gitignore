@@ -1,25 +1,4 @@
-# python
-*.pyc
-__pycache__/
-.pytest_cache/
+/.idea
+/doc
+/venv
 
-# virtual environment
-.venv*/
-venv*/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Pycharm IDE
-/.idea/
-
-# VS Code IDE
-/.vscode/
-*.code-workspace
-
-# default data folder
-/data/
-
-# app logs
-*.log
-*.log.*
