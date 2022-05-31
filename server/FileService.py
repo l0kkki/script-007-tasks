@@ -64,10 +64,10 @@ def get_file_data(filename: str) -> dict:
                 'create_date': datetime.fromtimestamp(os.path.getctime(filename)),
                 'edit_date': datetime.fromtimestamp(os.path.getmtime(filename)),
                 'size': os.path.getsize(filename)}
-    except RuntimeError:
-        raise RuntimeError('File does not exist')
+    except FileNotFoundError:
+        raise RuntimeError(f'File does not exist {filename}')
     except ValueError:
-        raise ValueError('Filename is invalid')
+        raise ValueError(f'Filename is invalid {filename}')
 
 
 def create_file(filename: str, content: str = None) -> dict:
@@ -97,7 +97,7 @@ def create_file(filename: str, content: str = None) -> dict:
                 'create_date': datetime.fromtimestamp(os.path.getctime(filename)),
                 'size': os.path.getsize(filename)}
     except ValueError:
-        raise ValueError('Filename is invalid')
+        raise ValueError(f'Filename is invalid {filename}')
 
 
 def delete_file(filename: str) -> None:
@@ -111,4 +111,7 @@ def delete_file(filename: str) -> None:
         ValueError: if filename is invalid.
     """
 
-    pass
+    try:
+        os.remove(filename)
+    except FileNotFoundError:
+        raise RuntimeError(f'File does not exist {filename}')
