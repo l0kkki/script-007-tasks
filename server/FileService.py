@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+
 def change_dir(path: str, autocreate: bool = True) -> None:
     """Change current directory of app.
 
@@ -30,8 +31,8 @@ def get_files() -> list:
     cwd = os.getcwd()
     file_list = [elem for elem in os.listdir(cwd) if os.path.isfile(elem)]
     return [{'name': os.path.basename(file),
-             'create_date': datetime.fromtimestamp(os.path.getctime('1.txt')),
-             'edit_date': datetime.fromtimestamp(os.path.getmtime('1.txt')),
+             'create_date': datetime.fromtimestamp(os.path.getctime(file)),
+             'edit_date': datetime.fromtimestamp(os.path.getmtime(file)),
              'size': os.path.getsize(file)}
             for file in file_list]
 
@@ -55,7 +56,18 @@ def get_file_data(filename: str) -> dict:
         ValueError: if filename is invalid.
     """
 
-    pass
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+        return {'name': os.path.basename(filename),
+                'content': content,
+                'create_date': datetime.fromtimestamp(os.path.getctime(filename)),
+                'edit_date': datetime.fromtimestamp(os.path.getmtime(filename)),
+                'size': os.path.getsize(filename)}
+    except RuntimeError:
+        raise RuntimeError('File does not exist')
+    except ValueError:
+        raise ValueError('Filename is invalid')
 
 
 def create_file(filename: str, content: str = None) -> dict:
