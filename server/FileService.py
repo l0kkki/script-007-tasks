@@ -1,3 +1,5 @@
+import os
+from datetime import datetime
 
 def change_dir(path: str, autocreate: bool = True) -> None:
     """Change current directory of app.
@@ -25,7 +27,13 @@ def get_files() -> list:
         - size (int): size of file in bytes.
     """
 
-    pass
+    cwd = os.getcwd()
+    file_list = [elem for elem in os.listdir(cwd) if os.path.isfile(elem)]
+    return [{'name': os.path.basename(file),
+             'create_date': datetime.fromtimestamp(os.path.getctime('1.txt')),
+             'edit_date': datetime.fromtimestamp(os.path.getmtime('1.txt')),
+             'size': os.path.getsize(file)}
+            for file in file_list]
 
 
 def get_file_data(filename: str) -> dict:
