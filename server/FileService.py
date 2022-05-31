@@ -19,8 +19,8 @@ def change_dir(path: str, autocreate: bool = True) -> None:
     elif autocreate:
         try:
             os.mkdir(path)
-        except Exception:
-            raise ValueError(f'Cant create directory, path {path} is invalid')
+        except Exception as ex:
+            raise ValueError(f'Cant create directory, path {path}, base exception: {ex}')
         os.chdir(path)
     else:
         raise RuntimeError('Directory does not exist, autocreate is False')
@@ -75,7 +75,7 @@ def get_file_data(filename: str) -> dict:
                 'size': os.path.getsize(filename)}
     except FileNotFoundError:
         raise RuntimeError(f'File does not exist {filename}')
-    except ValueError:
+    except Exception:
         raise ValueError(f'Filename is invalid {filename}')
 
 
@@ -105,7 +105,7 @@ def create_file(filename: str, content: str = None) -> dict:
                 'content': content,
                 'create_date': datetime.fromtimestamp(os.path.getctime(filename)),
                 'size': os.path.getsize(filename)}
-    except ValueError:
+    except Exception:
         raise ValueError(f'Filename is invalid {filename}')
 
 
