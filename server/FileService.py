@@ -88,7 +88,16 @@ def create_file(filename: str, content: str = None) -> dict:
         ValueError: if filename is invalid.
     """
 
-    pass
+    try:
+        with open(filename, 'w') as file:
+            if content is not None:
+                file.write(content)
+        return {'name': os.path.basename(filename),
+                'content': content,
+                'create_date': datetime.fromtimestamp(os.path.getctime(filename)),
+                'size': os.path.getsize(filename)}
+    except ValueError:
+        raise ValueError('Filename is invalid')
 
 
 def delete_file(filename: str) -> None:
