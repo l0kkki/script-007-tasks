@@ -14,7 +14,16 @@ def change_dir(path: str, autocreate: bool = True) -> None:
         ValueError: if path is invalid.
     """
 
-    pass
+    if os.path.isdir(path):
+        os.chdir(path)
+    elif autocreate:
+        try:
+            os.mkdir(path)
+        except Exception:
+            raise ValueError(f'Cant create directory, path {path} is invalid')
+        os.chdir(path)
+    else:
+        raise RuntimeError('Directory does not exist, autocreate is False')
 
 
 def get_files() -> list:
