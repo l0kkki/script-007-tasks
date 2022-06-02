@@ -1,4 +1,5 @@
 import os
+import logging
 from datetime import datetime
 
 
@@ -18,12 +19,18 @@ def change_dir(path: str, autocreate: bool = True) -> None:
         os.chdir(path)
     elif autocreate:
         try:
+            logging.debug(f'Create directory on path {path}')
             os.mkdir(path)
         except Exception as ex:
-            raise ValueError(f'Cant create directory, path {path}, base exception: {ex}')
+            ex_text = 'Cant create directory, path {path}, base exception: {ex}'
+            logging.error(ex_text)
+            raise ValueError(ex_text)
         os.chdir(path)
+        logging.debug(f'Directory changed to {path}')
     else:
-        raise RuntimeError('Directory does not exist, autocreate is False')
+        ex_text = 'Directory does not exist, autocreate is False'
+        logging.error(ex_text)
+        raise RuntimeError(ex_text)
 
 
 def get_files() -> list:
@@ -39,6 +46,7 @@ def get_files() -> list:
 
     cwd = os.getcwd()
     file_list = [elem for elem in os.listdir(cwd) if os.path.isfile(elem)]
+    logging.debug(f'Returns file list in {cwd}')
     return [{'name': os.path.basename(file),
              'create_date': datetime.fromtimestamp(os.path.getctime(file)),
              'edit_date': datetime.fromtimestamp(os.path.getmtime(file)),
@@ -66,6 +74,7 @@ def get_file_data(filename: str) -> dict:
     """
 
     try:
+        logging.debug(f'Getting info from file {filename}')
         with open(filename, 'r') as file:
             content = file.read()
         return {'name': os.path.basename(filename),
@@ -74,9 +83,13 @@ def get_file_data(filename: str) -> dict:
                 'edit_date': datetime.fromtimestamp(os.path.getmtime(filename)),
                 'size': os.path.getsize(filename)}
     except FileNotFoundError:
-        raise RuntimeError(f'File does not exist {filename}')
+        ex_text = f'File does not exist {filename}'
+        logging.error(ex_text)
+        raise RuntimeError(ex_text)
     except Exception:
-        raise ValueError(f'Filename is invalid {filename}')
+        ex_text = f'Filename is invalid {filename}'
+        logging.error(ex_text)
+        raise ValueError(ex_text)
 
 
 def create_file(filename: str, content: str = None) -> dict:
@@ -98,6 +111,7 @@ def create_file(filename: str, content: str = None) -> dict:
     """
 
     try:
+        logging.debug(f'Createing file {filename}')
         with open(filename, 'w') as file:
             if content is not None:
                 file.write(content)
@@ -106,7 +120,9 @@ def create_file(filename: str, content: str = None) -> dict:
                 'create_date': datetime.fromtimestamp(os.path.getctime(filename)),
                 'size': os.path.getsize(filename)}
     except Exception:
-        raise ValueError(f'Filename is invalid {filename}')
+        ex_text = f'Filename is invalid {filename}'
+        logging.error(ex_text)
+        raise ValueError(ex_text)
 
 
 def delete_file(filename: str) -> None:
@@ -121,6 +137,9 @@ def delete_file(filename: str) -> None:
     """
 
     try:
+        logging.debug(f'Deleting file {filename}')
         os.remove(filename)
     except FileNotFoundError:
-        raise RuntimeError(f'File does not exist {filename}')
+        ex_text = f'File does not exist {filename}'
+        logging.error(ex_text)
+        raise RuntimeError(ex_text)

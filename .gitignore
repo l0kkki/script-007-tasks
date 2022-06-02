@@ -2,6 +2,9 @@
 *.pyc
 __pycache__/
 
+# logs
+*.log
+
 # virtual environment
 .venv*/
 venv*/
