@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 import os
 import logging.handlers
-import argparse
 import sys
 
+import pytest
+
+from config import Config
 from server import FileService
+
+
+MAIN_DIR = main_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 def init_logging(log_dir, level):
@@ -20,25 +25,10 @@ def init_logging(log_dir, level):
 
 
 def main():
-    main_dir = os.path.dirname(os.path.abspath(__file__))
-    default_wd = os.path.join(main_dir, r'FileServer')
-    default_log_dir = os.path.join(main_dir, r'Logs')
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-d',
-                        '--directory',
-                        help='Path to working directory',
-                        default=default_wd)
-    parser.add_argument('--log_dir',
-                        help='Path to logging directory',
-                        default=default_log_dir)
-    parser.add_argument('--log_level',
-                        choices=[10, 20, 30, 40, 50],
-                        type=int,
-                        help='Logging level',
-                        default=20)
-    cmd_params = parser.parse_args()
-    init_logging(cmd_params.log_dir, cmd_params.log_level)
-    FileService.change_dir(cmd_params.directory)
+    config = Config(MAIN_DIR).config
+    init_logging(config['log_dir'], config['log_level'])
+    logging.info('Start file service')
+    FileService.change_dir(config['directory'])
     logging.info('Done')
 
 

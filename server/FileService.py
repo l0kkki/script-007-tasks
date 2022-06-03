@@ -17,6 +17,7 @@ def change_dir(path: str, autocreate: bool = True) -> None:
 
     if os.path.isdir(path):
         os.chdir(path)
+        logging.debug(f'Directory changed to {path}')
     elif autocreate:
         try:
             logging.debug(f'Create directory on path {path}')
