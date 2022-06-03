@@ -3,13 +3,11 @@ import os
 import logging.handlers
 import sys
 
-import pytest
-
 from config import Config
 from server import FileService
 
 
-MAIN_DIR = main_dir = os.path.dirname(os.path.abspath(__file__))
+MAIN_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def init_logging(log_dir, level):
@@ -27,6 +25,8 @@ def init_logging(log_dir, level):
 def main():
     config = Config(MAIN_DIR).config
     init_logging(config['log_dir'], config['log_level'])
+    if 'conf_file_warning' in config:
+        logging.warning(f'Cant read config.yaml, catch exception {config["conf_file_warning"]}')
     logging.info('Start file service')
     FileService.change_dir(config['directory'])
     logging.info('Done')

@@ -3,7 +3,7 @@
 __pycache__/
 
 # logs
-*.log
+*.log*
 
 # virtual environment
 .venv*/

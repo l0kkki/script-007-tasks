@@ -30,7 +30,8 @@ class Config:
         parser.add_argument('--log_level',
                             choices=[10, 20, 30, 40, 50],
                             type=int,
-                            help='Logging level')
+                            help='Logging level'
+                                 '10-DEBUG, 20-INFO, 30-WARNING, 40-ERROR, 50-CRITICAL')
         cmd_params = parser.parse_args().__dict__
         return {key: value for key, value in cmd_params.items() if value is not None}
 
@@ -67,8 +68,7 @@ class Config:
             with open(CONFIG_PATH, 'r', encoding='utf-8') as conf_file:
                 yaml_conf = yaml.load(conf_file, Loader=yaml.Loader)
         except Exception as ex:
-            with open('CONFIG_WARNING.txt', 'w') as warning_file:
-                warning_file.write(f'Cant read config.yaml, catch exception {ex}')
+            yaml_conf['conf_file_warning'] = ex
         return yaml_conf
 
     def __init__(self, main_dir):
