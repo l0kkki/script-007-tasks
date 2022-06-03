@@ -1,0 +1,6 @@
+# work directory for file server
+directory: FileServer
+# log directory
+log_dir: Logs
+# logging level 10-DEBUG, 20-INFO, 30-WARNING, 40-ERROR, 50-CRITICAL
+log_level: 20
