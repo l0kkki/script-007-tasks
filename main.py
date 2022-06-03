@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-import argparse
 import logging
 import logging.config
-import os
 import sys
 
 import server.FileService as FileService
+from utils.Config import config
 
 
 def setup_logger(level='NOTSET', filename=None):
-    config = {
+    logger_conf = {
         'version': 1,
         'formatters': {
             'default': {
-                'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+                'format':
+                    '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
             },
         },
         'handlers': {
@@ -29,41 +29,23 @@ def setup_logger(level='NOTSET', filename=None):
         }
     }
     if filename:
-        config['handlers']['file'] = {
+        logger_conf['handlers']['file'] = {
             'class': 'logging.FileHandler',
             'encoding': 'UTF-8',
             'formatter': 'default',
             'filename': filename,
         }
-        config['root']['handlers'].append('file')
-    logging.config.dictConfig(config)
+        logger_conf['root']['handlers'].append('file')
+    logging.config.dictConfig(logger_conf)
 
 
 def main():
-    """Entry point of app.
-
-    Get and parse command line parameters and configure web app.
-
-    Command line options:
-    -d --dir  - working directory (absolute or relative path, default: current_app_folder/data).
-    -h --help - help.
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-d',
-                        '--dir',
-                        default='data',
-                        type=str,
-                        help="working directory (default: 'data')")
-    parser.add_argument('--log-level', default='warning', choices=['debug', 'info', 'warning', 'error'],
-                        help='Log level to console (default is warning)')
-    parser.add_argument('-l', '--log-file', type=str, help='Log file.')
-    params = parser.parse_args()
-    setup_logger(level=logging.getLevelName(params.log_level.upper()), filename=params.log_file)
+    setup_logger(level=logging.getLevelName(config.log.level.upper()),
+                 filename=config.log.file)
     logging.debug('started')
+    logging.debug('config %s', config.to_dict())
 
-    work_dir = params.dir if os.path.isabs(params.dir) \
-        else os.path.join(os.getcwd(), params.dir)
-    FileService.change_dir(work_dir)
+    FileService.change_dir(config.dir)
 
 
 if __name__ == '__main__':
