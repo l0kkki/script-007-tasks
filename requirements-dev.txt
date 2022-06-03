@@ -1,1 +1,3 @@
-ptpython
+pytest
+pytest-cov
+coverage
