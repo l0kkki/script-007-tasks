@@ -1,23 +1,30 @@
 
-# PROJECT_NAME project
+# File server project
 
-Author is AUTHOR_NAME.
+Author is Maxim Suslov.
 
 # Requirements
 
 ## General
 
-- [X] Support Python 3.7+
-- [X] Use venv during the development
+- [x] Support Python 3.7+
+- [x] Use venv during the development
 - [ ] Program must work both on Linux and Windows
 - [ ] Specify directory to keep manage files via CLI arguments
 - [ ] Cover functionality using `pytest`
 - [ ] Deploy via Docker image (for those who is familiar with Docker)
+- [ ] Use `logging` module for logging
 
 ## File Service
 
 - [ ] Avoid usage of dangerous values like `../../../etc/passwd`
 - [ ] Support binary file content as well
+
+## Configuration
+
+- [ ] Read settings from CLI arguments
+- [ ] Read settings from env vars
+- [ ] Read settings from config file
 
 ## Web Service
 
