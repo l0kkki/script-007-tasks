@@ -1,5 +1,7 @@
 # work directory for file server
 directory: FileServer
+# applicaton port
+port: 8080
 # log directory
 log_dir: Logs
 # logging level 10-DEBUG, 20-INFO, 30-WARNING, 40-ERROR, 50-CRITICAL
