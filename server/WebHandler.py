@@ -85,8 +85,10 @@ class WebHandler:
         """
         logging.debug(f'Incoming {request}')
         result = FileService.get_files()
-        return web.json_response(data={'status': 'success', 'files': result},
-                                 dumps=lambda x: json.dumps(x, default=str))
+        return web.json_response(data={
+            'status': 'success',
+            'files_info': json.dumps(result, default=str)
+        })
 
     @staticmethod
     async def get_file_data(request: web.Request) -> web.Response:
@@ -105,9 +107,10 @@ class WebHandler:
         logging.debug(f'Incoming {request}')
         file_path = request.match_info.get('file')
         result = FileService.get_file_data(file_path)
-        web.json_response()
-        return web.json_response(data={'status': 'success', 'file_info': result},
-                                 dumps=lambda x: json.dumps(x, default=str))
+        return web.json_response(data={
+            'status': 'success',
+            'file_info': json.dumps(result, default=str)
+        })
 
     @staticmethod
     async def create_file(request: web.Request) -> web.Response:
@@ -132,8 +135,10 @@ class WebHandler:
         file = request_json.get('file')
         content = request_json.get('content')
         result = FileService.create_file(file, content)
-        return web.json_response(data={'status': 'success', 'file_info': result},
-                                 dumps=lambda x: json.dumps(x, default=str))
+        return web.json_response(data={
+            'status': 'success',
+            'file_info': json.dumps(result, default=str)
+        })
 
     @staticmethod
     async def delete_file(request: web.Request) -> web.Response:
