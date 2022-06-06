@@ -17,6 +17,7 @@ class Config:
         Returns:
             Dict with non empty value:
              - directory
+             - host
              - port
              - log_dir
              - log_level
@@ -26,6 +27,8 @@ class Config:
         parser.add_argument('-d',
                             '--directory',
                             help='Path to working directory')
+        parser.add_argument('--host',
+                            help='Application host')
         parser.add_argument('-p',
                             '--port',
                             help='Application port')
@@ -46,6 +49,7 @@ class Config:
         Returns:
             Dict with non empty value:
              - directory
+             - host
              - port
              - log_dir
              - log_level
@@ -54,6 +58,7 @@ class Config:
         app_prefix = 'FILE_SERVER_'
         accord_dict = {
             f'{app_prefix}DIRECTORY': 'directory',
+            f'{app_prefix}HOST': 'host',
             f'{app_prefix}PORT': 'port',
             f'{app_prefix}LOG_DIR': 'log_dir',
             f'{app_prefix}LOG_LEVEL': 'log_level'
@@ -66,8 +71,9 @@ class Config:
 
         Returns:
             Dict with non empty value:
-             - port
              - directory
+             - host
+             - port
              - log_dir
              - log_level
         """
@@ -83,7 +89,8 @@ class Config:
         # default config
         self.config = {
             'directory': os.path.join(main_dir, 'FileServer'),
-            'port': '8080',
+            'host': '127.0.0.1',
+            'port': '80',
             'log_dir': os.path.join(main_dir, 'Logs'),
             'log_level': 20
         }
