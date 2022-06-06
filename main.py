@@ -4,7 +4,7 @@ import logging.handlers
 import sys
 
 from config import Config
-from server import FileService
+from server.WebHandler import WebHandler
 
 
 MAIN_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,7 +28,7 @@ def main():
     if 'conf_file_warning' in config:
         logging.warning(f'Cant read config.yaml, catch exception {config["conf_file_warning"]}')
     logging.info('Start file service')
-    FileService.change_dir(config['directory'])
+    WebHandler(config).run_web_application()
     logging.info('Done')
 
 
