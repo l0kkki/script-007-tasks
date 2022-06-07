@@ -2,6 +2,12 @@
 *.pyc
 __pycache__/
 
+# project
+FileServer/
+
+# logs
+*.log*
+
 # virtual environment
 .venv*/
 venv*/
