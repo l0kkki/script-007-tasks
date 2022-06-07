@@ -85,7 +85,7 @@ class Config:
             yaml_conf['conf_file_warning'] = ex
         return yaml_conf
 
-    def __init__(self, main_dir):
+    def __init__(self, main_dir, get_cli_arg=True):
         # default config
         self.config = {
             'directory': os.path.join(main_dir, 'FileServer'),
@@ -96,4 +96,5 @@ class Config:
         }
         self.config.update(self.get_config_from_file())
         self.config.update(self.get_config_from_env())
-        self.config.update(self.get_config_from_cl())
+        if get_cli_arg:
+            self.config.update(self.get_config_from_cl())
